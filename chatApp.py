@@ -16,12 +16,12 @@ def loginPage():
     
     return render_template('login.html')
 
-@app.route('/lobby')
-def homePage():
+# @app.route('/lobby')
+# def homePage():
     
-    return render_template('register.html')
+#     return render_template('register.html')
 
 
 if __name__ == '__main__':
      app.debug = True
-     app.run(host='0.0.0.0', port='5000', debug='True')
+     app.run(host='0.0.0.0', debug='True')
