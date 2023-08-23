@@ -1,10 +1,15 @@
 from flask import Flask, render_template
+import csv
 
 app = Flask(__name__)
 
 @app.route('/')
 def homePage():
+   
     
+
+
+
     return render_template('register.html')
 
 
@@ -13,7 +18,12 @@ def homePage():
 
 @app.route('/login')
 def loginPage():
-    return render_template('login.html')
+     if request.method== 'POST':
+      username= request.form['username']
+      password=request.form['password']
+    
+
+     return render_template('login.html')
 
 # @app.route('/lobby')
 # def homePage():
