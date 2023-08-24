@@ -5,7 +5,7 @@ import base64
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key' 
+app.secret_key = '1234' 
 
 @app.route('/logout')
 def logout():
@@ -56,7 +56,7 @@ def login():
       username= request.form['username']
       password=request.form['password']
       if verify(username,password):
-          session['username']=username
+          #session['username']=username
           return redirect('/lobby')
      return render_template('login.html') 
     
