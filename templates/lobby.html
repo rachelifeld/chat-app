@@ -15,7 +15,7 @@
 
     <h3>Create a room:</h3>
     <form method="POST">
-        <label for="rname">room name:</label><br>
+        <label for=" ">room name:</label><br>
         <input type="text" id="rname" name="new_room"><br>
         <input type="submit" name="Create" value="Create">
     </form>
@@ -24,7 +24,7 @@
     <form action="chat" method="POST" id="chat-form">
         <label for="room">Room name:</label><br>
         <select name="room" id="room">
-            {% for room in ['room1', 'room2'] %}
+            {% for room in rooms %}
             <option value="{{ room }}">{{ room }}</option>
             {% endfor %}
         </select>

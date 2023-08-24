@@ -29,7 +29,7 @@ def register():
         with open('users.csv', 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([username, encode_pass])
-
+        return redirect("/lobby")     
 
     return render_template('register.html')
 
@@ -42,10 +42,6 @@ def verify(username,password):
      return False            
 
 
-
-# @app.route('/lobby')
-# def 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
      if request.method== 'POST':
@@ -57,12 +53,43 @@ def login():
      return render_template('login.html') 
     
 
-   
+def romm_is_exists(new_room):
+    if os.path.exists(new_room +".txt"):
+       return True
+    return False
 
-# @app.route('/lobby')
-# def homePage():
+@app.route('/lobby', methods=['GET','POST'])
+def lobby():
+ if 'username' in session:
+
+    if request.method== 'POST':
+        new_room=request.form['new_room']
+        if romm_is_exists(new_room):
+           print("the room is already exists")
+           return redirect('/lobby')   
+        else:
+          f= open("rooms/"+new_room +".txt","w+")
+    rooms =os.listdir('rooms')    
+    return render_template('lobby.html', rooms=rooms)
+ else:
+       return render_template('/')
     
-#     return render_template('register.html')
+
+@app.route('/chat/<room>', methods=['GET','POST'])
+def chat_room(room):
+      return render_template('chat.html', room=room)
+
+# @app.route('api/chat/<room>', methods=['GET','POST'])
+# def api_chat_room(room):
+#   file = room
+#   if request.metod == "POST":
+#        msg = request.form['msg']
+#        current_d_t=datetime.now()
+#        with open('text_file.txt', 'a') as file:
+#         file.write( current_d_t + "  :טובה לבנתיים עד שאני אקלוט מי היוזר הנוכחי"+ msg + '\n')
+#         file.read()
+    #  return "hhhhh"
+#   return render_template('chat.html')
 
 
 if __name__ == '__main__':
