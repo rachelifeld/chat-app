@@ -1,10 +1,16 @@
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session
 import csv
 import os
 import base64
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key' 
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
 def encode_password(password):
     encoded_bytes = base64.b64encode(password.encode('utf-8'))
@@ -29,7 +35,9 @@ def register():
         with open('users.csv', 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([username, encode_pass])
-        return redirect("/lobby")     
+
+        #session['username']=username    
+        return redirect("/lobby") 
 
     return render_template('register.html')
 
@@ -48,12 +56,12 @@ def login():
       username= request.form['username']
       password=request.form['password']
       if verify(username,password):
-          #session['username']=username
+          session['username']=username
           return redirect('/lobby')
      return render_template('login.html') 
     
 
-def romm_is_exists(new_room):
+def room_is_exists(new_room):
     if os.path.exists(new_room +".txt"):
        return True
     return False
@@ -90,6 +98,9 @@ def chat_room(room):
 #         file.read()
     #  return "hhhhh"
 #   return render_template('chat.html')
+
+
+
 
 
 if __name__ == '__main__':
