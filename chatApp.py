@@ -36,7 +36,7 @@ def register():
             writer = csv.writer(f)
             writer.writerow([username, encode_pass])
 
-        #session['username']=username    
+        session['username']=username    
         return redirect("/lobby") 
 
     return render_template('register.html')
@@ -56,7 +56,7 @@ def login():
       username= request.form['username']
       password=request.form['password']
       if verify(username,password):
-          #session['username']=username
+          session['username']=username
           return redirect('/lobby')
      return render_template('login.html') 
     
@@ -72,7 +72,7 @@ def lobby():
 
     if request.method== 'POST':
         new_room=request.form['new_room']
-        if romm_is_exists(new_room):
+        if room_is_exists(new_room):
            print("the room is already exists")
            return redirect('/lobby')   
         else:
