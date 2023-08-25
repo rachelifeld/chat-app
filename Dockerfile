@@ -11,5 +11,7 @@ RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r
 COPY / .
 EXPOSE 5000
 # command to run on container start
+ENV FLASK_ENV development
+ENV ROOMS_FILES_PATH rooms/
 CMD [ "python", "./chatApp.py" ]
 

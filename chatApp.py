@@ -4,9 +4,10 @@ import os
 import base64
 from datetime import datetime
 
+
 app = Flask(__name__)
 app.secret_key = '1234' 
-
+# app.config['SESSION_COOKIE_SECURE'] = False 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
@@ -68,8 +69,7 @@ def room_is_exists(new_room):
 
 @app.route('/lobby', methods=['GET','POST'])
 def lobby():
- if 'username' in session:
-
+ if session.get('username'):
     if request.method== 'POST':
         new_room=request.form['new_room']
         if room_is_exists(new_room):
@@ -80,27 +80,35 @@ def lobby():
     rooms =os.listdir('rooms')    
     return render_template('lobby.html', rooms=rooms)
  else:
-       return render_template('/')
+        return redirect('/')
+ 
     
+@app.route('/api/chat/<room>', methods=['GET', 'POST'])
+def render_chat(room):
+    path=os.getenv('ROOMS_FILES_PATH')+room
+    if request.method == "POST":
+        msg = request.form['msg']
+        current_user = session['username']
+        # current_user = request.form['username']
+        current_d_t = datetime.now()
+        with open(path, "a") as file:
+            file.write(f'[{current_d_t:%Y-%m-%d %H:%M:%S}] {current_user}: {msg}\n')
+    # else:
+    with open(path, "r") as file:
+    #   lines = file.readlines()
+    # return lines
+        file.seek(0)
+        lines = file.read()
+    return lines
 
-@app.route('/chat/<room>', methods=['GET','POST'])
-def chat_room(room):
-      return render_template('chat.html', room=room)
 
-# @app.route('api/chat/<room>', methods=['GET','POST'])
-# def api_chat_room(room):
-#   file = room
-#   if request.metod == "POST":
-#        msg = request.form['msg']
-#        current_d_t=datetime.now()
-#        with open('text_file.txt', 'a') as file:
-#         file.write( current_d_t + "  :טובה לבנתיים עד שאני אקלוט מי היוזר הנוכחי"+ msg + '\n')
-#         file.read()
-    #  return "hhhhh"
-#   return render_template('chat.html')
-
-
-
+@app.route('/chat/<room>', methods=['GET', 'POST'])
+def chat(room):
+    if 'username' in session:
+        return render_template('chat.html', room=room)
+    else:
+        return redirect('/')
+    
 
 
 if __name__ == '__main__':

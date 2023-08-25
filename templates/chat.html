@@ -35,7 +35,8 @@
     <body>
       <h1>Chat Room: {{ room }}</h1>
 
-      <form id="inform" action='/api/chat/'+room method="POST">
+         
+      <form id="inform" action="/api/chat"+room method="POST">
         Message:<input name="msg" type=text>
         <input id="sendBtn" type="button" value="send">
       </form>
