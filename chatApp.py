@@ -78,6 +78,8 @@ def lobby():
         else:
           f= open("rooms/"+new_room +".txt","w+")
     rooms =os.listdir('rooms')    
+    for i in range(len(rooms)):
+      rooms[i] = rooms[i][:-4]
     return render_template('lobby.html', rooms=rooms)
  else:
         return redirect('/')
@@ -85,18 +87,14 @@ def lobby():
     
 @app.route('/api/chat/<room>', methods=['GET', 'POST'])
 def render_chat(room):
-    path=os.getenv('ROOMS_FILES_PATH')+room
+    path=os.getenv('ROOMS_FILES_PATH')+room+".txt"
     if request.method == "POST":
         msg = request.form['msg']
         current_user = session['username']
-        # current_user = request.form['username']
         current_d_t = datetime.now()
         with open(path, "a") as file:
             file.write(f'[{current_d_t:%Y-%m-%d %H:%M:%S}] {current_user}: {msg}\n')
-    # else:
     with open(path, "r") as file:
-    #   lines = file.readlines()
-    # return lines
         file.seek(0)
         lines = file.read()
     return lines

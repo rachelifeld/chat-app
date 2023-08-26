@@ -40,8 +40,7 @@
         Message:<input name="msg" type=text>
         <input id="sendBtn" type="button" value="send">
       </form>
-      <pre id="chatbox">Loading...</pre>0.
-      
+      <pre id="chatbox">Loading...</pre>      
       <br>
       <br>
       <a href="/lobby">Back to lobby</a>
@@ -51,3 +50,84 @@
 
     </body>
   </html>
+
+
+
+
+  <style>
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form input[name="msg"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form input[type="button"] {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="button"]:hover {
+  background-color: #2980b9;
+}
+
+#chatbox {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+#chatbox::before {
+  content: "Chat Log:";
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+a {
+  display: inline-block;
+  margin: 10px;
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #2980b9;
+}
+  </style>
