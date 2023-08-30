@@ -7,22 +7,13 @@ set -e
 read -p "Enter the version: " version
 read -p "Enter the commit hash: " commit_hash
 
-# Set the repository details
-repository="your-github-repository"
-image_name="my-chat-app"
+git tag "$version" "$commit_hash" || echo "Failed to tag the commit"
 
-# Tagging the Docker image
-docker tag $image_name:$version $repository:$version-$commit_hash
+# Build the image
+docker build -t chat-app:$version . || echo "Failed to build the image"
 
-# Building the Docker image
-docker build -t $image_name:$version .
-
-# Tagging the built image with commit hash
-docker tag $image_name:$version $repository:$commit_hash
-
-# Pushing the tags to the GitHub repository
-docker push $repository:$version-$commit_hash
-docker push $repository:$commit_hash
-
+#push the tag to github repository
+git push origin "$version" || echo "failed to push to github"
 
 echo "Deployment successful!"
+
