@@ -114,10 +114,17 @@ def health_check():
 
 @app.route('/api/chat/<room>/clear', methods=['GET','POST'])
 def clearPage(room):
-    name_to_remove= session['username']
+    username= session['username']
     path=os.getenv('ROOMS_FILES_PATH')+room+".txt"
-    open(path, "w").close()
-    return render_template("chat.html",room=room)
+    with open(path, 'r') as f:
+        lines = f.readlines()
+
+    with open(path, 'w') as f:
+        for line in lines:
+            if username not in line:
+                f.write(line) 
+    return render_template('chat.html', room=room)
+
 
 
 if __name__ == '__main__':
