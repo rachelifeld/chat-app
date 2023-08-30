@@ -30,6 +30,8 @@
         $("#sendBtn").click(sendmessage)
         window.setTimeout(updateChat, 1500);
       });
+
+   
   
     </script>
     <body>
@@ -47,6 +49,7 @@
       <br>
       <br>
       <a href="/logout">logout</a>
+      <button> <a href="/api/chat/{{ room }}/clear">Clear</a></button>
 
     </body>
   </html>

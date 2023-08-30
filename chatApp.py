@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import csv
 import os
 import base64
@@ -106,7 +106,18 @@ def chat(room):
         return render_template('chat.html', room=room)
     else:
         return redirect('/')
-    
+
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return 'OK', 200
+
+@app.route('/api/chat/<room>/clear', methods=['GET','POST'])
+def clearPage(room):
+    name_to_remove= session['username']
+    path=os.getenv('ROOMS_FILES_PATH')+room+".txt"
+    open(path, "w").close()
+    return render_template("chat.html",room=room)
 
 
 if __name__ == '__main__':
