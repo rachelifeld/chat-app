@@ -24,4 +24,5 @@ docker tag $image_name:$version $repository:$commit_hash
 docker push $repository:$version-$commit_hash
 docker push $repository:$commit_hash
 
+
 echo "Deployment successful!"
